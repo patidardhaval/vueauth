@@ -34,7 +34,7 @@ export default new Vuex.Store({
         login({ commit }, form) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({ url: './api/login', data: form, method: 'POST' })
+                axios({ url: 'localhost:3000/login', data: form, method: 'POST' })
                     .then(resp => {
 
                         if (resp.data.status == 200) {
