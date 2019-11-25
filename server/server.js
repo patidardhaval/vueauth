@@ -2,31 +2,34 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const PORT = 3000;
-
-// Enable CORS
-app.all('/*', function(req, res, next) {
-  // CORS headers
-  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  // Set custom headers for CORS
-  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
-  if (req.method == 'OPTIONS') {
-    res.status(200).end();
-  } else {
+app.all('*', function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.header('Access-Control-Allow-Headers', '*');
     next();
-  }
 });
-
 app.get('/users', (req, res) => {
-  return res.send('GET HTTP method on user resource');
+    return res.send('GET HTTP method on user resource');
+});
+app.post('/products', (req, res) => {
+    let products = {};
+    products.data = [{
+        name: "prod1",
+        image: "https://png.pngtree.com/png-clipart/20190705/original/pngtree-user-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4246274.jpg",
+        detail: "details"
+    }, {
+        name: "prod1",
+        image: "https://png.pngtree.com/png-clipart/20190705/original/pngtree-user-icon-vector-illustration-in-glyph-style-for-any-purpose-png-image_4246274.jpg",
+        detail: "details"
+    }]
+    res.json(products);
 });
 app.post('/login', (req, res) => {
-	let login = {}
-	login.success = true;
-	login.message = "User Login successfully.", 
-	login.data = {};
-	login.data.token = 123, 
-    res.json(login);
+    let login = {}
+    login.success = true;
+    login.message = "User Login successfully.",
+        login.data = {};
+    login.data.token = 123,
+        res.json(login);
 });
-
 app.listen(PORT, () => console.log(`Express server currently running on port ${PORT}`));
