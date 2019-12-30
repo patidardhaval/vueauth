@@ -34,10 +34,10 @@ export default new Vuex.Store({
         login({ commit }, form) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({ url: 'localhost:3000/login', data: form, method: 'POST' })
+                axios({ url: 'http://localhost:3000/login', data: form, method: 'POST' })
                     .then(resp => {
-
-                        if (resp.data.status == 200) {
+                      
+                        if (resp.data.success == true) {
                             axios.defaults.headers.common['Authorization'] = resp.data.data.token;
                             localStorage.setItem('token', resp.data.data.token);
                             localStorage.setItem('username', resp.data.data.email);
