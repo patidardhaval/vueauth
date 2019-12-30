@@ -44,8 +44,8 @@ export default {
             this.$store.dispatch('login', { email, password })
                 .then((data) => {
                     this.submitted = false;
-                   
-                    if(data.data.status==200){
+                  
+                    if(data.data.success==true){
                         this.$toasted.show(data.data.message)
                         this.$router.push({ name: 'about' })
                     }else{
