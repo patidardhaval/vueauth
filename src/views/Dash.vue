@@ -54,7 +54,7 @@ export default {
     },
     methods: {
         getallproducts: function() {
-            axios({ url: './api/products', data: {}, method: 'GET' })
+            axios({ url: 'http://localhost:3000/products', data: {}, method: 'GET' })
                 .then(resp => {
                     this.dash = resp.data
                 })
