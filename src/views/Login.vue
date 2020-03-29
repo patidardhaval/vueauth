@@ -29,6 +29,9 @@
 </template>
 <script>
 export default {
+    mounted(){
+        console.log(process.env.VUE_APP_BASEURL)
+    },
     data() {
         return {
             email: "",
@@ -47,7 +50,7 @@ export default {
                   
                     if(data.data.success==true){
                         this.$toasted.show(data.data.message)
-                        this.$router.push({ name: 'about' })
+                        this.$router.go('/about')
                     }else{
                         this.$toasted.error(data.data.message)
                         //console.log(data);

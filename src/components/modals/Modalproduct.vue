@@ -65,7 +65,7 @@ export default {
 
             axios({
                     method: 'POST',
-                    url: this.dynurl,
+                    url: process.env.VUE_APP_BASEURL+'/' + this.dynurl,
                     data: formData,
                     config: { headers: { 'Content-Type': 'multipart/form-data' } }
                 })
@@ -83,13 +83,13 @@ export default {
         },
         fetchbyid: function(id) {
             this.title = "Data Update";
-            this.dynurl = "./api/products/" + id;
+            this.dynurl = "product/" + id;
             this.dynmethod = "PUT"
-            axios({ url: './api/products/' + id, data: {}, method: 'GET' })
+            axios({ url: process.env.VUE_APP_BASEURL+'/' + this.dynurl, data: {}, method: 'GET' })
                 .then(resp => {
-                    this.p_name = resp.data.data.name
-                    this.p_detail = resp.data.data.detail
-                    this.url = resp.data.data.image
+                    this.p_name = resp.data.product.name
+                    this.p_detail = resp.data.product.detail
+                    this.url = resp.data.product.image
                 })
                 .catch(err => {
 
@@ -109,7 +109,7 @@ export default {
         changetitile: function() {
             this.closebtn()
             this.title = "Data Insert"
-            this.dynurl = "./api/products"
+            this.dynurl = "product"
             this.dynmethod = "POST"
         }
     },

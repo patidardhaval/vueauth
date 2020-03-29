@@ -15,13 +15,13 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tr v-for="d in dash.data">
+                        <tr v-for="d in dash">
                             <td><img style="height: 60px;width: 60px; border-radius: 50%" v-bind:src="d.image"></td>
                             <td>{{ d.name }}</td>
                             <td>{{ d.detail }}</td>
                             <td>
-                                <button class="btn btn-info" data-toggle="modal" data-target="#op_product" @click="$refs.child.fetchbyid(d.id)">Edit</button>
-                                <button class="btn btn-danger" @click="removeproducts(d.id)" data-toggle="modal">Remove</button>
+                                <button class="btn btn-info" data-toggle="modal" data-target="#op_product" @click="$refs.child.fetchbyid(d._id)">Edit</button>
+                                <button class="btn btn-danger" @click="removeproducts(d._id)" data-toggle="modal">Remove</button>
                             </td>
                         </tr>
                     </table>
@@ -54,16 +54,16 @@ export default {
     },
     methods: {
         getallproducts: function() {
-            axios({ url: 'http://localhost:3000/products', data: {}, method: 'GET' })
+            axios({ url: process.env.VUE_APP_BASEURL+'/product', data: {}, method: 'GET' })
                 .then(resp => {
-                    this.dash = resp.data
+                    this.dash = resp.data.product
                 })
                 .catch(err => {
 
                 })
         },
         removeproducts: function(id) {
-            axios({ url: './api/products/' + id, data: {}, method: 'DELETE' })
+            axios({ url: process.env.VUE_APP_BASEURL+'/product/' + id, data: {}, method: 'DELETE' })
                 .then(resp => {
                     if (resp.data.success == true) {
                         this.$toasted.show(resp.data.message);

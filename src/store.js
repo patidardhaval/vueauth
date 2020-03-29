@@ -34,16 +34,17 @@ export default new Vuex.Store({
         login({ commit }, form) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                axios({ url: 'http://localhost:3000/login', data: form, method: 'POST' })
+                axios({ url: process.env.VUE_APP_BASEURL+'/users/login', data: form, method: 'POST' })
                     .then(resp => {
-                      
-                        if (resp.data.success == true) {
-                            axios.defaults.headers.common['Authorization'] = resp.data.data.token;
-                            localStorage.setItem('token', resp.data.data.token);
-                            localStorage.setItem('username', resp.data.data.email);
-                            commit('auth_success', resp.data.data)
+                        console.log(resp)
+                        if (resp.data.success === true) {
+                            axios.defaults.headers.common['Authorization'] = resp.data.token;
+                            localStorage.setItem('token', resp.data.token);
+                            localStorage.setItem('username', resp.data.user.email);
+                            commit('auth_success', resp.data.success)
                             
                         } else {
+                            reject()
                             // Vue.toasted.error("Username Password Not Match");
                         }
                         resolve(resp)

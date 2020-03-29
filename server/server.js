@@ -1,6 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://root:Dhaval123%23@cluster0-jswyk.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true,useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+})
+
 const PORT = 3000;
 app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -9,7 +19,9 @@ app.all('*', function(req, res, next) {
     next();
 });
 app.get('/users', (req, res) => {
-    return res.send('GET HTTP method on user resource');
+        products.find({}, function(err, products) {
+           console.log(products)
+        });
 });
 app.post('/products', (req, res) => {
     let products = {};
